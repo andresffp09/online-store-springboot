@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.softlon.online.store.entities.Product;
 import com.softlon.online.store.repositories.IProductRepository;
 import com.softlon.online.store.services.contracts.IProductService;
 
+@Service
 public class ProductService implements IProductService{
 
     @Autowired
