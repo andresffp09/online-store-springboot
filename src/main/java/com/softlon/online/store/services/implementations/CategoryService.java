@@ -36,6 +36,16 @@ public class CategoryService implements ICategoryService {
         }
     }
 
+    @Override
+    public ResponseEntity<Category> update(Category category) {
+        try {
+            Category categoryUpdate = categoryRepository.save(category);
+            return new ResponseEntity<Category>(categoryUpdate, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Category>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public ResponseEntity<Boolean> delete(Long id){
         try {
             categoryRepository.deleteById(id);
@@ -44,4 +54,6 @@ public class CategoryService implements ICategoryService {
             return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }

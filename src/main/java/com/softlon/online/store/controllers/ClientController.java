@@ -13,33 +13,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softlon.online.store.entities.Category;
-import com.softlon.online.store.services.contracts.ICategoryService;
+import com.softlon.online.store.entities.Client;
+import com.softlon.online.store.services.contracts.IClientService;
 
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
-
+@RequestMapping("/client")
+public class ClientController {
+    
     @Autowired
-    private ICategoryService categoryService;
+    private IClientService clientService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Category>> getAllCategories(){
-        return categoryService.findAll();
+    public ResponseEntity<List<Client>> getAllClients(){
+        return clientService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        return categoryService.create(category);
+    public ResponseEntity<Client> createClient(@RequestBody Client client){
+        return clientService.create(client);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category){
-        return categoryService.update(category);
+    public ResponseEntity<Client> updateClient(@RequestBody Client client){
+        return clientService.update(client);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Boolean> deleteCategory(@RequestParam Long id){
-        return categoryService.delete(id);
+    public ResponseEntity<Boolean> deleteClient(@RequestParam Long id){
+        return clientService.delete(id);
     }
+
+
 }

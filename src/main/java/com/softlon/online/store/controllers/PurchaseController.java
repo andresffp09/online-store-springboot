@@ -13,33 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softlon.online.store.entities.Category;
-import com.softlon.online.store.services.contracts.ICategoryService;
+import com.softlon.online.store.entities.Purchase;
+import com.softlon.online.store.services.contracts.IPurchaseService;
 
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/purchase")
+public class PurchaseController {
 
     @Autowired
-    private ICategoryService categoryService;
+    private IPurchaseService purchaseService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Category>> getAllCategories(){
-        return categoryService.findAll();
+    public ResponseEntity<List<Purchase>> getAllPurchases(){
+        return purchaseService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        return categoryService.create(category);
+    public ResponseEntity<Purchase> createPurchase(@RequestBody Purchase purchase){
+        return purchaseService.create(purchase);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category){
-        return categoryService.update(category);
+    public ResponseEntity<Purchase> updatePurchase(@RequestBody Purchase purchase){
+        return purchaseService.update(purchase);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Boolean> deleteCategory(@RequestParam Long id){
-        return categoryService.delete(id);
+    public ResponseEntity<Boolean> deletePurchase(@RequestParam Long id){
+        return purchaseService.delete(id);
     }
 }
