@@ -9,8 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "clients")
 public class Client {
     
     @Id
@@ -23,8 +25,15 @@ public class Client {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Purchase> purchases = new ArrayList<>();
 
+    public Client() {
+    }
+
     public Long getId() {
         return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getName() {
@@ -39,6 +48,19 @@ public class Client {
         return password;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
     
 
 }
