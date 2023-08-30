@@ -1,5 +1,8 @@
 package com.softlon.online.store.services.implementations;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +59,47 @@ public class PurchaseService implements IPurchaseService{
             return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public ResponseEntity<List<Purchase>> findAllByDate(String dateRequested) {
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(dateRequested, formatter);
+            LocalDateTime startDateTime = date.atStartOfDay();
+            LocalDateTime endDateTime = date.plusDays(1).atStartOfDay();
+            List<Purchase> purchases = purchaseRepository.findByDateBetween(startDateTime, endDateTime);
+            return new ResponseEntity<List<Purchase> >(purchases, HttpStatus.OK);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<List<Purchase> >(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Purchase>> findByUserId(Long id) {
+        try{
+            List<Purchase> purchases = purchaseRepository.findAllByClient(id);
+            return new ResponseEntity<List<Purchase> >(purchases, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<List<Purchase> >(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Purchase>> findAllByDateRange(String startDate, String endDate) {
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate LocalDateStart = LocalDate.parse(startDate, formatter);
+            LocalDate LocalDateEnd = LocalDate.parse(endDate, formatter);
+            LocalDateTime startDateTime = LocalDateStart.atStartOfDay();
+            LocalDateTime endDateTime = LocalDateEnd.plusDays(1).atStartOfDay();
+            List<Purchase> purchases = purchaseRepository.findByDateBetween(startDateTime, endDateTime);
+            return new ResponseEntity<List<Purchase> >(purchases, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<List<Purchase> >(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    
     
 }

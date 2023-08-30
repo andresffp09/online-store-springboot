@@ -14,6 +14,12 @@ public interface IPurchaseService {
     public ResponseEntity<Purchase> update(Purchase purchase);
 
     public ResponseEntity<Boolean> delete(Long id);
+
+    public ResponseEntity<List<Purchase>> findAllByDate(String date);
+
+    public ResponseEntity<List<Purchase>> findByUserId(Long id);
+
+    public ResponseEntity<List<Purchase>> findAllByDateRange(String startDate, String endDate);
 }
 
 

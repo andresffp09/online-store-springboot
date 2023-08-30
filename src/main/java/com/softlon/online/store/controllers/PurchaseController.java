@@ -42,4 +42,20 @@ public class PurchaseController {
     public ResponseEntity<Boolean> deletePurchase(@RequestParam Long id){
         return purchaseService.delete(id);
     }
+
+    @GetMapping("/searchByDate")
+    public ResponseEntity<List<Purchase>> findPurchasesByDate(@RequestParam("date") String date){
+        return purchaseService.findAllByDate(date);
+    }
+
+    @GetMapping("/searchByUserId")
+    public ResponseEntity<List<Purchase>> findPurchasesByUserId(@RequestParam Long id){
+        return purchaseService.findByUserId(id);
+    }
+
+    @GetMapping("/searchByDateRange")
+    public ResponseEntity<List<Purchase>> findPurchasesByDateRange(
+        @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+        return purchaseService.findAllByDateRange(startDate, endDate);
+    }
 }
