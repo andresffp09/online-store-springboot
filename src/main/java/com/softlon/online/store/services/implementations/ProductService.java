@@ -57,5 +57,25 @@ public class ProductService implements IProductService{
         }
 
     }
+
+    @Override
+    public ResponseEntity<List<Product>> productsWithHigherPrice(Double price) {
+        try{
+            List<Product> products = productRepository.productsWithHigherPrice(price);
+            return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Product> findByNameIgnoreCase(String name) {
+        try{
+            Product product = productRepository.findByNameIgnoreCase(name);
+            return new ResponseEntity<Product>(product, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

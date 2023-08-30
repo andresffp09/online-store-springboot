@@ -43,4 +43,17 @@ public class ProductController {
         return productService.delete(id);
     }
 
+    @GetMapping("/higherPrice")
+    public ResponseEntity<List<Product>> filterByHigherPrice(@RequestParam("price") Double price){
+        return productService.productsWithHigherPrice(price);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Product> findByName(@RequestParam("name") String name){
+        return productService.findByNameIgnoreCase(name);
+    }
+
+
+
+
 }

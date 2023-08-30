@@ -14,4 +14,8 @@ public interface IProductService {
     public ResponseEntity<Product> update(Product product);
 
     public ResponseEntity<Boolean> delete(Long id);
+
+    public ResponseEntity<List<Product>> productsWithHigherPrice(Double price);
+
+    public ResponseEntity<Product> findByNameIgnoreCase(String name);  
 }
