@@ -58,4 +58,12 @@ public class PurchaseController {
         @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
         return purchaseService.findAllByDateRange(startDate, endDate);
     }
+
+    @GetMapping("/searchByClientAndDateRange")
+    public ResponseEntity<List<Purchase>> findPurchasesByClientAndDateRange( @RequestParam("userId") Long id,
+            @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+        return purchaseService.findByClientAndBetweenDate(id, startDate, endDate);
+    }
+
+
 }

@@ -17,4 +17,14 @@ public interface IPurchaseRepository extends JpaRepository<Purchase, Long>{
     public List<Purchase> findByDateBetween(
         LocalDateTime startDateTime,
         LocalDateTime endDateTime);
+
+    @Query(value = "SELECT p.* FROM purchases p " +
+            "WHERE p.client_id = :id " +
+            "AND p.date BETWEEN :startDateTime AND :endDateTime", nativeQuery = true)
+    public List<Purchase> findByClientAndBetweenDates(
+        Long id,
+        LocalDateTime startDateTime,
+        LocalDateTime endDateTime);
+
+
 }

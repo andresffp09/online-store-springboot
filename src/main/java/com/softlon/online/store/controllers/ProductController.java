@@ -13,32 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softlon.online.store.constants.Constants;
 import com.softlon.online.store.entities.Product;
 import com.softlon.online.store.services.contracts.IProductService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping(Constants.PRODUCT)
 public class ProductController {
     
     @Autowired
     private IProductService productService;
 
-    @GetMapping("/list")
+    @GetMapping(Constants.GET_ALL)
     public ResponseEntity<List<Product>> getAllProducts(){
         return productService.findAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping(Constants.CREATE)
     public ResponseEntity<Product> createProducts(@RequestBody Product product){
         return productService.create(product);
     }
 
-    @PutMapping("/update")
+    @PutMapping(Constants.UPDATE)
     public ResponseEntity<Product> updateProduct(@RequestBody Product product){
         return productService.update(product);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping(Constants.DELETE)
     public ResponseEntity<Boolean> deleteProduct(@RequestParam Long id){
         return productService.delete(id);
     }

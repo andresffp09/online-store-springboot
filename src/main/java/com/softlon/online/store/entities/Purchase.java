@@ -17,6 +17,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "purchases")
@@ -27,6 +29,7 @@ public class Purchase implements Serializable{
     private Long Id;
     private Double discount;
     private Double totalPrice;
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime date = LocalDateTime.now();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)

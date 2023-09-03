@@ -20,6 +20,8 @@ public interface IPurchaseService {
     public ResponseEntity<List<Purchase>> findByUserId(Long id);
 
     public ResponseEntity<List<Purchase>> findAllByDateRange(String startDate, String endDate);
+
+    public ResponseEntity<List<Purchase>> findByClientAndBetweenDate(Long id, String startDate, String endDate);
 }
 
 
