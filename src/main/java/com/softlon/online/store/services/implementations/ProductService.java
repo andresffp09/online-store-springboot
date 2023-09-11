@@ -1,13 +1,16 @@
 package com.softlon.online.store.services.implementations;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.softlon.online.store.dto.ProductDto;
 import com.softlon.online.store.entities.Product;
+import com.softlon.online.store.mappers.ProductMapper;
 import com.softlon.online.store.repositories.IProductRepository;
 import com.softlon.online.store.services.contracts.IProductService;
 
@@ -18,32 +21,35 @@ public class ProductService implements IProductService{
     private IProductRepository productRepository;
 
     @Override
-    public ResponseEntity<List<Product>> findAll() {
+    public ResponseEntity<List<ProductDto>> findAll() {
         try{
             List<Product> products = productRepository.findAll();
-            return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+            List<ProductDto> productsDto = products.stream().map(p -> ProductMapper.MapToProductDto(p)).collect(Collectors.toList());
+            return new ResponseEntity<List<ProductDto>>(productsDto, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<ProductDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Product> create(Product product) {
+    public ResponseEntity<ProductDto> create(Product product) {
         try{
             Product productSaved = productRepository.save(product);
-            return new ResponseEntity<Product>(productSaved, HttpStatus.CREATED);
+            ProductDto productDto = ProductMapper.MapToProductDto(productSaved);
+            return new ResponseEntity<ProductDto>(productDto, HttpStatus.CREATED);
         }catch (Exception e) {
-            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ProductDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Product> update(Product product) {
+    public ResponseEntity<ProductDto> update(Product product) {
         try{
             Product productUpdated= productRepository.save(product);
-            return new ResponseEntity<Product>(productUpdated, HttpStatus.OK);
+            ProductDto productDto = ProductMapper.MapToProductDto(productUpdated);
+            return new ResponseEntity<ProductDto>(productDto, HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ProductDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -59,22 +65,24 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ResponseEntity<List<Product>> productsWithHigherPrice(Double price) {
+    public ResponseEntity<List<ProductDto>> productsWithHigherPrice(Double price) {
         try{
             List<Product> products = productRepository.productsWithHigherPrice(price);
-            return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+            List<ProductDto> productsDto = products.stream().map(p -> ProductMapper.MapToProductDto(p)).collect(Collectors.toList());
+            return new ResponseEntity<List<ProductDto>>(productsDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<ProductDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Product> findByNameIgnoreCase(String name) {
+    public ResponseEntity<ProductDto> findByNameIgnoreCase(String name) {
         try{
             Product product = productRepository.findByNameIgnoreCase(name);
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
+            ProductDto productDto = ProductMapper.MapToProductDto(product);
+            return new ResponseEntity<ProductDto>(productDto, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ProductDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

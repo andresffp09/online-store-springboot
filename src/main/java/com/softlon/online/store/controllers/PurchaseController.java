@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softlon.online.store.dto.PurchaseDto;
 import com.softlon.online.store.entities.Purchase;
 import com.softlon.online.store.services.contracts.IPurchaseService;
 
@@ -24,17 +25,17 @@ public class PurchaseController {
     private IPurchaseService purchaseService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Purchase>> getAllPurchases(){
+    public ResponseEntity<List<PurchaseDto>> getAllPurchases(){
         return purchaseService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Purchase> createPurchase(@RequestBody Purchase purchase){
+    public ResponseEntity<PurchaseDto> createPurchase(@RequestBody Purchase purchase){
         return purchaseService.create(purchase);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Purchase> updatePurchase(@RequestBody Purchase purchase){
+    public ResponseEntity<PurchaseDto> updatePurchase(@RequestBody Purchase purchase){
         return purchaseService.update(purchase);
     }
 
@@ -44,23 +45,23 @@ public class PurchaseController {
     }
 
     @GetMapping("/searchByDate")
-    public ResponseEntity<List<Purchase>> findPurchasesByDate(@RequestParam("date") String date){
+    public ResponseEntity<List<PurchaseDto>> findPurchasesByDate(@RequestParam("date") String date){
         return purchaseService.findAllByDate(date);
     }
 
     @GetMapping("/searchByUserId")
-    public ResponseEntity<List<Purchase>> findPurchasesByUserId(@RequestParam Long id){
+    public ResponseEntity<List<PurchaseDto>> findPurchasesByUserId(@RequestParam Long id){
         return purchaseService.findByUserId(id);
     }
 
     @GetMapping("/searchByDateRange")
-    public ResponseEntity<List<Purchase>> findPurchasesByDateRange(
+    public ResponseEntity<List<PurchaseDto>> findPurchasesByDateRange(
         @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
         return purchaseService.findAllByDateRange(startDate, endDate);
     }
 
     @GetMapping("/searchByClientAndDateRange")
-    public ResponseEntity<List<Purchase>> findPurchasesByClientAndDateRange( @RequestParam("userId") Long id,
+    public ResponseEntity<List<PurchaseDto>> findPurchasesByClientAndDateRange( @RequestParam("userId") Long id,
             @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
         return purchaseService.findByClientAndBetweenDate(id, startDate, endDate);
     }

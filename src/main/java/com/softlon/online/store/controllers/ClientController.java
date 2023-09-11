@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softlon.online.store.dto.ClientDto;
 import com.softlon.online.store.entities.Client;
 import com.softlon.online.store.services.contracts.IClientService;
 
@@ -24,17 +25,17 @@ public class ClientController {
     private IClientService clientService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Client>> getAllClients(){
+    public ResponseEntity<List<ClientDto>> getAllClients(){
         return clientService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Client> createClient(@RequestBody Client client){
+    public ResponseEntity<ClientDto> createClient(@RequestBody Client client){
         return clientService.create(client);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Client> updateClient(@RequestBody Client client){
+    public ResponseEntity<ClientDto> updateClient(@RequestBody Client client){
         return clientService.update(client);
     }
 

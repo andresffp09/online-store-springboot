@@ -1,13 +1,16 @@
 package com.softlon.online.store.services.implementations;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.softlon.online.store.dto.ClientDto;
 import com.softlon.online.store.entities.Client;
+import com.softlon.online.store.mappers.ClientMapper;
 import com.softlon.online.store.repositories.IClientRepository;
 import com.softlon.online.store.services.contracts.IClientService;
 
@@ -18,32 +21,35 @@ public class ClientService implements IClientService{
     private IClientRepository clientRepository;
 
     @Override
-    public ResponseEntity<List<Client>> findAll() {
+    public ResponseEntity<List<ClientDto>> findAll() {
         try{
             List<Client> clients = clientRepository.findAll();
-            return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<List<Client>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            List<ClientDto> clientsDto = clients.stream().map(c -> ClientMapper.MapToClientDto(c)).collect(Collectors.toList());
+            return new ResponseEntity<List<ClientDto>>(clientsDto, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<List<ClientDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Client> create(Client client) {
+    public ResponseEntity<ClientDto> create(Client client) {
         try{
             Client clientSaved = clientRepository.save(client);
-            return new ResponseEntity<Client>(clientSaved, HttpStatus.CREATED);
+            ClientDto clientDto = ClientMapper.MapToClientDto(clientSaved);
+            return new ResponseEntity<ClientDto>(clientDto, HttpStatus.CREATED);
         }catch(Exception e){
-            return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ClientDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Client> update(Client client) {
+    public ResponseEntity<ClientDto> update(Client client) {
         try{
             Client clientUpdated = clientRepository.save(client);
-            return new ResponseEntity<Client>(clientUpdated, HttpStatus.OK);
+            ClientDto clientDto = ClientMapper.MapToClientDto(clientUpdated);
+            return new ResponseEntity<ClientDto>(clientDto, HttpStatus.OK);
         }catch(Exception e){
-            return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ClientDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

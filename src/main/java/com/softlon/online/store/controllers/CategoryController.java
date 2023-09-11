@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softlon.online.store.dto.CategoryDto;
 import com.softlon.online.store.entities.Category;
 import com.softlon.online.store.services.contracts.ICategoryService;
 
@@ -24,17 +25,17 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Category>> getAllCategories(){
+    public ResponseEntity<List<CategoryDto>> getAllCategories(){
         return categoryService.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody Category category){
         return categoryService.create(category);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category){
+    public ResponseEntity<CategoryDto> updateCategory(@RequestBody Category category){
         return categoryService.update(category);
     }
 

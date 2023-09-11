@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softlon.online.store.constants.Constants;
+import com.softlon.online.store.dto.ProductDto;
 import com.softlon.online.store.entities.Product;
 import com.softlon.online.store.services.contracts.IProductService;
 
@@ -25,17 +26,17 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping(Constants.GET_ALL)
-    public ResponseEntity<List<Product>> getAllProducts(){
+    public ResponseEntity<List<ProductDto>> getAllProducts(){
         return productService.findAll();
     }
 
     @PostMapping(Constants.CREATE)
-    public ResponseEntity<Product> createProducts(@RequestBody Product product){
+    public ResponseEntity<ProductDto> createProducts(@RequestBody Product product){
         return productService.create(product);
     }
 
     @PutMapping(Constants.UPDATE)
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody Product product){
         return productService.update(product);
     }
 
@@ -45,12 +46,12 @@ public class ProductController {
     }
 
     @GetMapping("/higherPrice")
-    public ResponseEntity<List<Product>> filterByHigherPrice(@RequestParam("price") Double price){
+    public ResponseEntity<List<ProductDto>> filterByHigherPrice(@RequestParam("price") Double price){
         return productService.productsWithHigherPrice(price);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Product> findByName(@RequestParam("name") String name){
+    public ResponseEntity<ProductDto> findByName(@RequestParam("name") String name){
         return productService.findByNameIgnoreCase(name);
     }
 

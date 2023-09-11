@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.softlon.online.store.dto.CategoryDto;
 import com.softlon.online.store.entities.Category;
 
 public interface ICategoryService {
-    public ResponseEntity<List<Category>> findAll();
+    public ResponseEntity<List<CategoryDto>> findAll();
 
-    public ResponseEntity<Category> create(Category category);
+    public ResponseEntity<CategoryDto> create(Category category);
 
-    public ResponseEntity<Category> update(Category category);
+    public ResponseEntity<CategoryDto> update(Category category);
 
     public ResponseEntity<Boolean> delete(Long id);
 }
