@@ -27,6 +27,7 @@ public class ProductService implements IProductService{
             List<ProductDto> productsDto = products.stream().map(p -> ProductMapper.MapToProductDto(p)).collect(Collectors.toList());
             return new ResponseEntity<List<ProductDto>>(productsDto, HttpStatus.OK);
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new ResponseEntity<List<ProductDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -38,6 +39,7 @@ public class ProductService implements IProductService{
             ProductDto productDto = ProductMapper.MapToProductDto(productSaved);
             return new ResponseEntity<ProductDto>(productDto, HttpStatus.CREATED);
         }catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<ProductDto>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

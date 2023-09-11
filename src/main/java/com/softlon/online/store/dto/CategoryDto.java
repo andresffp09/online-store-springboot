@@ -1,11 +1,8 @@
 package com.softlon.online.store.dto;
 
-import java.util.List;
-
 public class CategoryDto {
     private Long Id;
     private String name;
-    private List<ProductDto> productsDto;
     
     public Long getId() {
         return Id;
@@ -18,12 +15,6 @@ public class CategoryDto {
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public List<ProductDto> getProductsDto() {
-        return productsDto;
-    }
-    public void setProductsDto(List<ProductDto> productsDto) {
-        this.productsDto = productsDto;
     }
 
     

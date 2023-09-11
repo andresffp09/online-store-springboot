@@ -35,6 +35,7 @@ public class PurchaseService implements IPurchaseService{
             List<PurchaseDto> purchaseDtos = purchases.stream().map(p -> PurchaseMapper.MapToPurchaseDto(p)).collect(Collectors.toList());
             return new ResponseEntity<List<PurchaseDto>>(purchaseDtos, HttpStatus.OK);
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new ResponseEntity<List<PurchaseDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

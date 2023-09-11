@@ -1,13 +1,10 @@
 package com.softlon.online.store.dto;
 
-import java.util.List;
-
 public class ClientDto {
     private Long id;
     private String name;
     private String email;
     private String password;
-    private List<PurchaseDto> purchasesDto;
 
     public Long getId() {
         return id;
@@ -33,12 +30,8 @@ public class ClientDto {
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<PurchaseDto> getPurchasesDto() {
-        return purchasesDto;
-    }
-    public void setPurchasesDto(List<PurchaseDto> purchasesDto) {
-        this.purchasesDto = purchasesDto;
-    }
+
+
 
     
         

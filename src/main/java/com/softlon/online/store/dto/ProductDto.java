@@ -7,7 +7,7 @@ public class ProductDto {
     private String photoUrl;
     private String description;
     private int stock;
-    private CategoryDto categoryDto;
+    private CategoryDto category;
     
     public Long getId() {
         return Id;
@@ -45,12 +45,14 @@ public class ProductDto {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
+    public CategoryDto getCategory() {
+        return category;
     }
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
+    public void setCategory(CategoryDto category) {
+        this.category = category;
     }
+
+    
 
     
 

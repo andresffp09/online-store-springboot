@@ -9,8 +9,8 @@ public class PurchaseDto {
     private Double discount;
     private double totalPrice;
     private LocalDateTime date;
-    private ClientDto clientDto;
-    private List<ProductDto> productDto;
+    private ClientDto client;
+    private List<ProductDto> products;
     
     public Long getId() {
         return Id;
@@ -36,18 +36,16 @@ public class PurchaseDto {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    public ClientDto getClientDto() {
-        return clientDto;
+    public List<ProductDto> getProducts() {
+        return products;
     }
-    public void setClientDto(ClientDto clientDto) {
-        this.clientDto = clientDto;
+    public void setProducts(List<ProductDto> products) {
+        this.products = products;
     }
-    public List<ProductDto> getProductDto() {
-        return productDto;
+    public ClientDto getClient() {
+        return client;
     }
-    public void setProductDto(List<ProductDto> productDto) {
-        this.productDto = productDto;
-    }
-    
-    
+    public void setClient(ClientDto client) {
+        this.client = client;
+    }    
 }
