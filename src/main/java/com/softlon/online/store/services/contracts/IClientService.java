@@ -16,4 +16,6 @@ public interface IClientService {
 
     public ResponseEntity<Boolean> delete(Long id);
 
+    public Client findClientByEmail(String email);
+
 }

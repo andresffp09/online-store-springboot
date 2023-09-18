@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.softlon.online.store.dto.ClientDto;
@@ -19,6 +20,9 @@ public class ClientService implements IClientService{
 
     @Autowired
     private IClientRepository clientRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<List<ClientDto>> findAll() {
@@ -34,6 +38,7 @@ public class ClientService implements IClientService{
     @Override
     public ResponseEntity<ClientDto> create(Client client) {
         try{
+            client.setPassword(passwordEncoder.encode(client.getPassword()));
             Client clientSaved = clientRepository.save(client);
             ClientDto clientDto = ClientMapper.MapToClientDto(clientSaved);
             return new ResponseEntity<ClientDto>(clientDto, HttpStatus.CREATED);
@@ -61,6 +66,11 @@ public class ClientService implements IClientService{
         }catch(Exception e){
             return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public Client findClientByEmail(String email) {
+        return clientRepository.findByEmail(email);
     }
     
 }

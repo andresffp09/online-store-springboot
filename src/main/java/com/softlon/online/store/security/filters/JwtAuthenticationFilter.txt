@@ -1,0 +1,86 @@
+package com.softlon.online.store.security.filters;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softlon.online.store.dto.ClientDto;
+import com.softlon.online.store.security.JwtTokenProvider;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Component
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+
+    private JwtTokenProvider jwtTokenProvider;
+
+    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
+
+        ClientDto client = null;
+        String username = "";
+        String password = "";
+                
+        try {
+            client = new ObjectMapper().readValue(request.getInputStream(), ClientDto.class);
+            username = client.getEmail();
+            password = client.getPassword();
+
+                
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
+
+        return getAuthenticationManager().authenticate(authentication);
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        
+        // Get the principle.
+        User user = (User) authResult.getPrincipal();
+        // Generar a token based on the user detail of the principle.
+        String token = jwtTokenProvider.generateToken(user);
+        // Add the token to the header response.
+        response.addHeader("Authorization", token);
+
+        // Create a map for a JSON response:
+        Map<String, Object> httpResponse = new HashMap<>();
+        httpResponse.put("token", token);
+        httpResponse.put("Message", "Autentication Successfully.");
+        httpResponse.put("Username", user.getUsername());
+
+        // Write the JSON to the body of the HTTP response:
+        response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().flush();
+        
+        super.successfulAuthentication(request, response, chain, authResult);
+    }
+
+    
+}

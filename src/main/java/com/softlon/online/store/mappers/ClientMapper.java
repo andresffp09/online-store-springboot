@@ -4,6 +4,7 @@ import com.softlon.online.store.dto.ClientDto;
 import com.softlon.online.store.entities.Client;
 
 public class ClientMapper {
+
     public static ClientDto MapToClientDto(Client client){
         ClientDto clientDto = new ClientDto();
         clientDto.setId(client.getId());
